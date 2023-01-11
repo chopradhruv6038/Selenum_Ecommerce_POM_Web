@@ -2,28 +2,28 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="Register User Test" parallel="tests">
+<suite name="Register, Login and Logout Tests" parallel="tests">
 
-    <test name="Register user from Home screen on landing screen on chrome browser">
+    <test name="New user Registration, login and logout scenarios">
         <parameter name="browser" value="chrome"/>
 
         <classes>
-            <class name="Org.Selenium.Tests.RegisterUserTest">
+            <class name="Org.Selenium.Tests.RegisterLoginLogoutUserTest">
                 <methods>
                     <include name="userRegistration"/>
                     <include name="userLoginVerification"/>
+                    <include name="logoutVerification"/>
                 </methods>
             </class>
         </classes>
     </test>
 
-    <test name="Invalid user or non registered user should get an error">
-        <parameter name="browser" value="chrome"/>
+    <test name="Invalid user or non registered user scenario">
+        <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="Org.Selenium.Tests.RegisterUserTest">
+            <class name="Org.Selenium.Tests.RegisterLoginLogoutUserTest">
                 <methods>
                     <include name="invalidUserLoginVerification"/>
-
                 </methods>
             </class>
         </classes>

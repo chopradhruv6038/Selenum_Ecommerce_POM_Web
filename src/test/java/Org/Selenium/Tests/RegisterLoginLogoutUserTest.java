@@ -3,22 +3,21 @@ package Org.Selenium.Tests;
 import Org.Selenium.Base.BaseTest;
 import Org.Selenium.Objects.NonRegisteredUserDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
-import Org.Selenium.Objects.RegistrationAndLoginDetails;
+import Org.Selenium.Pages.AccountDetailsPage;
 import Org.Selenium.Pages.AccountPage;
 import Org.Selenium.Pages.HomePage;
 import Org.Selenium.Utils.JacksonUtils;
 import io.qameta.allure.Description;
-import net.bytebuddy.build.Plugin;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-public class RegisterUserTest extends BaseTest {
+public class RegisterLoginLogoutUserTest extends BaseTest {
 
 
-
-    @Description("This Test case verifies that a new user is able to register successfully and get a welcome message as per the entered usernName")
+    @Description("This Test case verifies that a new user is able to register successfully and get a welcome message as per the entered userName")
     @Test
     public void userRegistration() throws IOException {
 
@@ -47,8 +46,8 @@ public class RegisterUserTest extends BaseTest {
     }
 
 
-    @Description("This test case verifies that registered user should be able to login")
-    @Test (priority = 1, description = "Not running this test case in parallel as user will first register and then login")
+    @Description("This test case verifies that registered user should be able to login successfully and view and verify account details")
+    @Test(priority = 1)
     public void userLoginVerification() throws IOException {
 
 
@@ -58,7 +57,7 @@ public class RegisterUserTest extends BaseTest {
         //jackson using input stream to read the Json.
         RegistrationAndLoginDetails registrationAndLoginDetails = new RegistrationAndLoginDetails();
         InputStream is = getClass().getClassLoader().getResourceAsStream("RegistrationDetails.json");
-        registrationAndLoginDetails  = JacksonUtils.deserializeJsonForRegistration(is, registrationAndLoginDetails);
+        registrationAndLoginDetails = JacksonUtils.deserializeJsonForRegistration(is, registrationAndLoginDetails);
 
 
         AccountPage accountPage = homePage.clickAccountLink();
@@ -71,10 +70,15 @@ public class RegisterUserTest extends BaseTest {
                 "Hello " + registrationAndLoginDetails.getEnterUserName() + " (not "
                         + registrationAndLoginDetails.getEnterUserName() + "?" + " Log out)");
 
+        AccountDetailsPage accountDetailsPage = accountPage.clickAccountDetailsLink();
+        Assert.assertEquals(accountDetailsPage.getDisplayName(), registrationAndLoginDetails.getEnterUserName());
+        Assert.assertEquals(accountDetailsPage.getEmailDetails(), registrationAndLoginDetails.enterEmailReg());
+
+
     }
 
-    @Description("This test case verified that invalid or non registered user should not be able to login and must get an error")
-    @Test (description = "Invalid / non registered user should not be able to login")
+    @Description("This test case verifies that invalid or non registered user should not be able to login and must get an error")
+    @Test
     public void invalidUserLoginVerification() throws IOException {
 
         //HomePage
@@ -83,7 +87,7 @@ public class RegisterUserTest extends BaseTest {
 
         NonRegisteredUserDetails nonRegisteredUserDetails = new NonRegisteredUserDetails();
         InputStream is = getClass().getClassLoader().getResourceAsStream("InvalidUser.json");
-        nonRegisteredUserDetails  = JacksonUtils.deserializeJsonForNonRegisteredUser(is, nonRegisteredUserDetails);
+        nonRegisteredUserDetails = JacksonUtils.deserializeJsonForNonRegisteredUser(is, nonRegisteredUserDetails);
 
         AccountPage accountPage = homePage.clickAccountLink();
         Assert.assertEquals(accountPage.verifyLoginPageText(), "Login");
@@ -91,6 +95,29 @@ public class RegisterUserTest extends BaseTest {
 
         Assert.assertEquals(accountPage.verifyNonRegisteredUserErrorMsg(),
                 "Error: " + "The username " + nonRegisteredUserDetails.getEnterUserName() + " is not registered on this site. " + "If you are unsure of your username, " + "try your email address instead.");
+
+    }
+
+    @Description("This test verifies that logged in user is able to logout successfully")
+    @Test
+    public void logoutVerification() throws IOException {
+
+        HomePage homePage = new HomePage(getDriver());
+        homePage.loadUrl();
+
+        //jackson using input stream to read the Json.
+        RegistrationAndLoginDetails registrationAndLoginDetails = new RegistrationAndLoginDetails();
+        InputStream is = getClass().getClassLoader().getResourceAsStream("RegistrationDetails.json");
+        registrationAndLoginDetails = JacksonUtils.deserializeJsonForRegistration(is, registrationAndLoginDetails);
+
+
+        AccountPage accountPage = homePage.clickAccountLink();
+        accountPage.enterUserNameAndPassword(registrationAndLoginDetails).clickLoginBtn();
+
+        //logging out and asserting.
+        accountPage.clickLogoutBtn();
+        Assert.assertEquals(accountPage.verifyLoginPageText(), "Logins");
+
 
     }
 

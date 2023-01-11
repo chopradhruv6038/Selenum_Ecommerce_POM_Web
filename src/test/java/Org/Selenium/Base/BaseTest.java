@@ -44,7 +44,7 @@ public class BaseTest {
 
         if (result.getStatus() == ITestResult.FAILURE) {
 
-            File destFile = new File("src" + File.separator + browser + File.separator +
+            File destFile = new File("scr" + File.separator + browser + File.separator +
                     result.getTestClass().getRealClass().getSimpleName() + "_" +
                     result.getMethod().getMethodName() + ".png");
 
@@ -60,9 +60,9 @@ public class BaseTest {
     public void getScreenshot(File destFile) throws IOException {
 
         TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
-        File scrFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        File srcFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
 
-        FileUtils.copyFile(scrFile, destFile);
+        FileUtils.copyFile(srcFile, destFile);
     }
 
 

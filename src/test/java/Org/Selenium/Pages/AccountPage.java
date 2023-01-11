@@ -25,6 +25,8 @@ public class AccountPage extends BasePage {
     By passwordLogin = By.cssSelector("#password");
     By loginBtn =  By.cssSelector("button[value='Log in']");
     By nonRegisteredUserErrTxt = By.cssSelector("div[id='content'] li:nth-child(1)");
+    By accountDetailsLink = By.cssSelector("li[class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--edit-account'] a");
+    By logoutLink = By.cssSelector("li[class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout'] a");
 
 
     public String verifyRegisterPageText() {
@@ -139,5 +141,16 @@ public class AccountPage extends BasePage {
 
     }
 
+public AccountDetailsPage clickAccountDetailsLink(){
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountDetailsLink)).click();
+
+        return new AccountDetailsPage(driver);
+}
+
+public void clickLogoutBtn(){
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutLink)).click();
+}
 
 }

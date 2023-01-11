@@ -1,6 +1,6 @@
 package Org.Selenium.Utils;
 
-import Org.Selenium.Objects.RegistrationDetails;
+import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;

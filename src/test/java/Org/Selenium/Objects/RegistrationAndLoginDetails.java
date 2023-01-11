@@ -1,11 +1,11 @@
 package Org.Selenium.Objects;
 
-public class RegistrationDetails {
+public class RegistrationAndLoginDetails {
 
 
     private String enterUserName;
     private String enterPassword;
-    private String enterEmail;
+    private String enterEmailReg;
 
     public String getEnterUserName() {
         return enterUserName;
@@ -15,7 +15,7 @@ public class RegistrationDetails {
         this.enterUserName = enterUserName;
     }
 
-    public String getEnterPassword() {
+    public String enterPassword() {
         return enterPassword;
     }
 
@@ -23,12 +23,12 @@ public class RegistrationDetails {
         this.enterPassword = enterPassword;
     }
 
-    public String getEnterEmail() {
-        return enterEmail;
+    public String enterEmailReg() {
+        return enterEmailReg;
     }
 
-    public void setEnterEmail(String enterEmail) {
-        this.enterEmail = enterEmail;
+    public void setEnterEmailReg(String enterEmailReg) {
+        this.enterEmailReg = enterEmailReg;
     }
 
 

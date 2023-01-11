@@ -1,7 +1,8 @@
 package Org.Selenium.Pages;
 
 import Org.Selenium.Base.BasePage;
-import Org.Selenium.Objects.RegistrationDetails;
+import Org.Selenium.Objects.RegistrationAndLoginDetails;
+import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +19,10 @@ public class AccountPage extends BasePage {
     By passwordReg = By.cssSelector("#reg_password");
     By registerBtn = By.cssSelector("button[value='Register']");
     By helloMessage = By.xpath("//p[contains(text(),'Hello')]");
+    By loginText = By.cssSelector("div[class='u-column1 col-1'] h2");
+    By userNameLogin = By.cssSelector("#username");
+    By passwordLogin = By.cssSelector("#password");
+    By loginBtn =  By.cssSelector("button[value='Log in']");
 
 
     public String verifyRegisterPageText() {
@@ -25,8 +30,14 @@ public class AccountPage extends BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(registerText)).getText();
     }
 
+    public String verifyLoginPageText() {
 
-    public AccountPage enterUserName(String userName) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(loginText)).getText();
+    }
+
+
+
+    public AccountPage enterUserNameReg(String userName) {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(userNameReg)).clear();
 
@@ -35,7 +46,7 @@ public class AccountPage extends BasePage {
         return this;
     }
 
-    public AccountPage enterPassword(String password) {
+    public AccountPage enterPasswordReg(String password) {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(passwordReg)).clear();
 
@@ -45,7 +56,7 @@ public class AccountPage extends BasePage {
     }
 
 
-    public AccountPage enterEmail(String Email) {
+    public AccountPage enterEmailReg(String Email) {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailReg)).clear();
 
@@ -55,11 +66,35 @@ public class AccountPage extends BasePage {
     }
 
 
-    public AccountPage enterAllRegistrationDetails(RegistrationDetails registrationDetails){
+    public AccountPage enterAllRegistrationDetails(RegistrationAndLoginDetails registrationDetails){
 
-        enterUserName(registrationDetails.getEnterUserName())
-                .enterPassword(registrationDetails.getEnterPassword())
-                .enterEmail(registrationDetails.getEnterEmail());
+        enterUserNameReg(registrationDetails.getEnterUserName())
+                .enterPasswordReg(registrationDetails.enterPassword())
+                .enterEmailReg(registrationDetails.enterEmailReg());
+        return this;
+
+
+    }
+
+
+    public AccountPage enterLoginUserName(String username){
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userNameLogin)).sendKeys(username);
+
+        return this;
+    }
+
+    public AccountPage enterLoginPassword(String password){
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordLogin)).sendKeys(password);
+
+        return this;
+    }
+
+    public AccountPage enterUserNameAndPassword(RegistrationAndLoginDetails registrationDetails){
+
+       enterLoginUserName(registrationDetails.getEnterUserName())
+               .enterLoginPassword(registrationDetails.enterPassword());
         return this;
 
 
@@ -69,6 +104,13 @@ public class AccountPage extends BasePage {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(registerBtn)).click();
         ;
+
+        return this;
+    }
+
+    public AccountPage clickLoginBtn() {
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loginBtn)).click();
 
         return this;
     }

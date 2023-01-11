@@ -116,7 +116,7 @@ public class RegisterLoginLogoutUserTest extends BaseTest {
 
         //logging out and asserting.
         accountPage.clickLogoutBtn();
-        Assert.assertEquals(accountPage.verifyLoginPageText(), "Logins");
+        Assert.assertEquals(accountPage.verifyLoginPageText(), "Login");
 
 
     }

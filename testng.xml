@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name="Register User Test" parallel="tests">
+
+    <test name="Register user from Home screen on landing screen on chrome browser">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="Org.Selenium.Tests.RegisterUserTest"/>
+        </classes>
+    </test>
+
+    <!--<test name="Register user from Home screen on landing screen on firefox browser">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="Org.Selenium.Tests.RegisterUserTest"/>
+        </classes>
+    </test>-->
+
+</suite>

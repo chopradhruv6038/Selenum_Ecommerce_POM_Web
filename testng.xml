@@ -6,8 +6,26 @@
 
     <test name="Register user from Home screen on landing screen on chrome browser">
         <parameter name="browser" value="chrome"/>
+
         <classes>
-            <class name="Org.Selenium.Tests.RegisterUserTest"/>
+            <class name="Org.Selenium.Tests.RegisterUserTest">
+                <methods>
+                    <include name="userRegistration"/>
+                    <include name="userLoginVerification"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Invalid user or non registered user should get an error">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="Org.Selenium.Tests.RegisterUserTest">
+                <methods>
+                    <include name="invalidUserLoginVerification"/>
+
+                </methods>
+            </class>
         </classes>
     </test>
 

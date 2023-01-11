@@ -1,6 +1,7 @@
 package Org.Selenium.Tests;
 
 import Org.Selenium.Base.BaseTest;
+import Org.Selenium.Objects.NonRegisteredUserDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import Org.Selenium.Pages.AccountPage;
@@ -48,7 +49,7 @@ public class RegisterUserTest extends BaseTest {
 
     @Description("This test case verifies that registered user should be able to login")
     @Test (priority = 1, description = "Not running this test case in parallel as user will first register and then login")
-    public void userLogin() throws IOException {
+    public void userLoginVerification() throws IOException {
 
 
         HomePage homePage = new HomePage(getDriver());
@@ -69,6 +70,27 @@ public class RegisterUserTest extends BaseTest {
         Assert.assertEquals(accountPage.verifyUserHelloMessage(),
                 "Hello " + registrationAndLoginDetails.getEnterUserName() + " (not "
                         + registrationAndLoginDetails.getEnterUserName() + "?" + " Log out)");
+
+    }
+
+    @Description("This test case verified that invalid or non registered user should not be able to login and must get an error")
+    @Test (description = "Invalid / non registered user should not be able to login")
+    public void invalidUserLoginVerification() throws IOException {
+
+        //HomePage
+        HomePage homePage = new HomePage(getDriver());
+        homePage.loadUrl();
+
+        NonRegisteredUserDetails nonRegisteredUserDetails = new NonRegisteredUserDetails();
+        InputStream is = getClass().getClassLoader().getResourceAsStream("InvalidUser.json");
+        nonRegisteredUserDetails  = JacksonUtils.deserializeJsonForNonRegisteredUser(is, nonRegisteredUserDetails);
+
+        AccountPage accountPage = homePage.clickAccountLink();
+        Assert.assertEquals(accountPage.verifyLoginPageText(), "Login");
+        accountPage.enterNonRegisteredUserNameAndPassword(nonRegisteredUserDetails).clickLoginBtn();
+
+        Assert.assertEquals(accountPage.verifyNonRegisteredUserErrorMsg(),
+                "Error: " + "The username " + nonRegisteredUserDetails.getEnterUserName() + " is not registered on this site. " + "If you are unsure of your username, " + "try your email address instead.");
 
     }
 

@@ -1,6 +1,7 @@
 package Org.Selenium.Pages;
 
 import Org.Selenium.Base.BasePage;
+import Org.Selenium.Objects.NonRegisteredUserDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import org.openqa.selenium.By;
@@ -23,6 +24,7 @@ public class AccountPage extends BasePage {
     By userNameLogin = By.cssSelector("#username");
     By passwordLogin = By.cssSelector("#password");
     By loginBtn =  By.cssSelector("button[value='Log in']");
+    By nonRegisteredUserErrTxt = By.cssSelector("div[id='content'] li:nth-child(1)");
 
 
     public String verifyRegisterPageText() {
@@ -100,6 +102,15 @@ public class AccountPage extends BasePage {
 
     }
 
+    public AccountPage enterNonRegisteredUserNameAndPassword(NonRegisteredUserDetails nonRegisteredUserDetails){
+
+        enterLoginUserName(nonRegisteredUserDetails.getEnterUserName())
+                .enterLoginPassword(nonRegisteredUserDetails.getEnterPassword());
+        return this;
+
+
+    }
+
     public AccountPage clickRegisterBtn() {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(registerBtn)).click();
@@ -121,5 +132,12 @@ public class AccountPage extends BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(helloMessage)).getText();
 
     }
+
+    public String verifyNonRegisteredUserErrorMsg() {
+
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(nonRegisteredUserErrTxt)).getText();
+
+    }
+
 
 }

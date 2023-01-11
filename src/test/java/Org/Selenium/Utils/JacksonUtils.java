@@ -1,5 +1,6 @@
 package Org.Selenium.Utils;
 
+import Org.Selenium.Objects.NonRegisteredUserDetails;
 import Org.Selenium.Objects.RegistrationAndLoginDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,6 +14,14 @@ public class JacksonUtils {
         ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(is, registrationAndLoginDetails.getClass());
+
+    }
+
+    public static NonRegisteredUserDetails deserializeJsonForNonRegisteredUser(InputStream is,  NonRegisteredUserDetails nonRegisteredUserDetails) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        return objectMapper.readValue(is, nonRegisteredUserDetails.getClass());
 
     }
 }
